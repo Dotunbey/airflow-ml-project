@@ -1,0 +1,6 @@
+apache-airflow-providers-amazon
+yfinance
+pandas
+scikit-learn
+xgboost
+s3fs
