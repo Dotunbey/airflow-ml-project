@@ -50,7 +50,22 @@ with DAG(
         # 1. Read Data from Data Lake
         print(f"Reading {file_key} from MinIO...")
         data = s3.read_key(key=file_key, bucket_name="stock-data")
+        
+        # --- FIX STARTS HERE ---
+        # Skip the first two rows if they contain ticker info (common in yfinance)
+        # We try reading normally, then force numeric conversion
         df = pd.read_csv(io.StringIO(data))
+        
+        # If yfinance returned a multi-level header (e.g., Price | Ticker), fix it:
+        if "Ticker" in df.columns or "Price" in df.iloc[0].values:
+             df = pd.read_csv(io.StringIO(data), header=2) # Skip bad headers
+
+        # Ensure 'Close' is numeric. Coerce errors (like 'AAPL') to NaN
+        df['Close'] = pd.to_numeric(df['Close'], errors='coerce')
+        
+        # Drop any rows that failed conversion
+        df = df.dropna(subset=['Close'])
+        # --- FIX ENDS HERE ---
         
         # 2. Feature Engineering (The Math)
         # Create a 'Target': Predict tomorrow's Close price
@@ -62,6 +77,12 @@ with DAG(
         
         # 3. Train XGBoost
         features = ['Open', 'High', 'Low', 'Volume', 'SMA_10', 'SMA_50']
+        # Ensure all feature columns are numeric too
+        for col in features:
+            df[col] = pd.to_numeric(df[col], errors='coerce')
+        
+        df = df.dropna() # Final clean
+        
         X = df[features]
         y = df['Target']
         
@@ -75,7 +96,7 @@ with DAG(
         mse = mean_squared_error(y_test, predictions)
         print(f"Model Training Complete. MSE: {mse}")
         
-        # 5. Save the 'Model' back to S3 (Simulated by saving a metrics file)
+        # 5. Save the 'Model' back to S3
         metrics = f"Model Trained on {datetime.now()}\nMSE: {mse}\nFeatures: {features}"
         s3.load_string(
             string_data=metrics,
