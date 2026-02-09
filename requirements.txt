@@ -4,3 +4,5 @@ pandas
 scikit-learn
 xgboost
 s3fs
+matplotlib
+requests
