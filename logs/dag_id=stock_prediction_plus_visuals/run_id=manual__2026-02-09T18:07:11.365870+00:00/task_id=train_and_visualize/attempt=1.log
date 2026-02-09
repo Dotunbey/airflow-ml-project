@@ -1,0 +1,22 @@
+[2026-02-09T18:07:22.377+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-02-09T18:07:22.397+0000] {taskinstance.py:2612} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: stock_prediction_plus_visuals.train_and_visualize manual__2026-02-09T18:07:11.365870+00:00 [queued]>
+[2026-02-09T18:07:22.406+0000] {taskinstance.py:2612} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: stock_prediction_plus_visuals.train_and_visualize manual__2026-02-09T18:07:11.365870+00:00 [queued]>
+[2026-02-09T18:07:22.406+0000] {taskinstance.py:2865} INFO - Starting attempt 1 of 1
+[2026-02-09T18:07:22.418+0000] {taskinstance.py:2888} INFO - Executing <Task(_PythonDecoratedOperator): train_and_visualize> on 2026-02-09 18:07:11.365870+00:00
+[2026-02-09T18:07:22.438+0000] {logging_mixin.py:190} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70 DeprecationWarning: This process (pid=252) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-02-09T18:07:22.439+0000] {standard_task_runner.py:72} INFO - Started process 260 to run task
+[2026-02-09T18:07:22.437+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'stock_prediction_plus_visuals', 'train_and_visualize', 'manual__2026-02-09T18:07:11.365870+00:00', '--job-id', '19', '--raw', '--subdir', 'DAGS_FOLDER/stock_prediction_dag.py', '--cfg-path', '/tmp/tmpfd_t_1st']
+[2026-02-09T18:07:22.443+0000] {standard_task_runner.py:105} INFO - Job 19: Subtask train_and_visualize
+[2026-02-09T18:07:22.511+0000] {task_command.py:467} INFO - Running <TaskInstance: stock_prediction_plus_visuals.train_and_visualize manual__2026-02-09T18:07:11.365870+00:00 [running]> on host c1e8eb18e7f2
+[2026-02-09T18:07:22.606+0000] {taskinstance.py:3131} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='stock_prediction_plus_visuals' AIRFLOW_CTX_TASK_ID='train_and_visualize' AIRFLOW_CTX_EXECUTION_DATE='2026-02-09T18:07:11.365870+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-02-09T18:07:11.365870+00:00'
+[2026-02-09T18:07:22.610+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-02-09T18:07:22.624+0000] {base.py:84} INFO - Retrieving connection 'minio_s3_conn'
+[2026-02-09T18:07:22.625+0000] {connection_wrapper.py:388} INFO - AWS Connection (conn_id='minio_s3_conn', conn_type='aws') credentials retrieved from login and password.
+[2026-02-09T18:07:22.945+0000] {logging_mixin.py:190} INFO - MSE: 1813.3045291720005 | RMSE: 42.582913582468734
+[2026-02-09T18:07:23.479+0000] {logging_mixin.py:190} INFO - Plot saved to MinIO: plots/TSLA_prediction_2026-02-09.png
+[2026-02-09T18:07:23.913+0000] {python.py:240} INFO - Done. Returned value was: None
+[2026-02-09T18:07:23.920+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-02-09T18:07:23.920+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=stock_prediction_plus_visuals, task_id=train_and_visualize, run_id=manual__2026-02-09T18:07:11.365870+00:00, execution_date=20260209T180711, start_date=20260209T180722, end_date=20260209T180723
+[2026-02-09T18:07:23.942+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-02-09T18:07:23.953+0000] {taskinstance.py:3900} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-02-09T18:07:23.954+0000] {local_task_job_runner.py:245} INFO - ::endgroup::

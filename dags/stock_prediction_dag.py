@@ -15,7 +15,7 @@ from sklearn.metrics import mean_squared_error
 
 # --- CONFIGURATION ---  
 DISCORD_WEBHOOK_URL = "https://discordapp.com/api/webhooks/1470476253252288654/GPgUlXbjo_9KPiJPBRD537gAAv4qBwnBWnYHWA8zCQBt__rJ4qrWk_USawt2YSaYkYFI"  # <--- PASTE HERE
-TICKER = "TSLA"
+TICKER = "NVDA"
 
 with DAG(
     dag_id='stock_prediction_plus_visuals',
