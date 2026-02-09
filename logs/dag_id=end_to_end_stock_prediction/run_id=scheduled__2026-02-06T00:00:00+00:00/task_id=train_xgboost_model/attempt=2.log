@@ -1,0 +1,22 @@
+[2026-02-07T14:31:39.287+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2026-02-07T14:31:39.310+0000] {taskinstance.py:2612} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: end_to_end_stock_prediction.train_xgboost_model scheduled__2026-02-06T00:00:00+00:00 [queued]>
+[2026-02-07T14:31:39.319+0000] {taskinstance.py:2612} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: end_to_end_stock_prediction.train_xgboost_model scheduled__2026-02-06T00:00:00+00:00 [queued]>
+[2026-02-07T14:31:39.319+0000] {taskinstance.py:2865} INFO - Starting attempt 2 of 2
+[2026-02-07T14:31:39.333+0000] {taskinstance.py:2888} INFO - Executing <Task(_PythonDecoratedOperator): train_xgboost_model> on 2026-02-06 00:00:00+00:00
+[2026-02-07T14:31:39.348+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'end_to_end_stock_prediction', 'train_xgboost_model', 'scheduled__2026-02-06T00:00:00+00:00', '--job-id', '11', '--raw', '--subdir', 'DAGS_FOLDER/stock_prediction_dag.py', '--cfg-path', '/tmp/tmp7cp5p0cv']
+[2026-02-07T14:31:39.350+0000] {logging_mixin.py:190} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70 DeprecationWarning: This process (pid=1410) is multi-threaded, use of fork() may lead to deadlocks in the child.
+[2026-02-07T14:31:39.351+0000] {standard_task_runner.py:105} INFO - Job 11: Subtask train_xgboost_model
+[2026-02-07T14:31:39.351+0000] {standard_task_runner.py:72} INFO - Started process 1414 to run task
+[2026-02-07T14:31:39.398+0000] {task_command.py:467} INFO - Running <TaskInstance: end_to_end_stock_prediction.train_xgboost_model scheduled__2026-02-06T00:00:00+00:00 [running]> on host 3d2e6d36c517
+[2026-02-07T14:31:39.476+0000] {taskinstance.py:3131} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='end_to_end_stock_prediction' AIRFLOW_CTX_TASK_ID='train_xgboost_model' AIRFLOW_CTX_EXECUTION_DATE='2026-02-06T00:00:00+00:00' AIRFLOW_CTX_TRY_NUMBER='2' AIRFLOW_CTX_DAG_RUN_ID='scheduled__2026-02-06T00:00:00+00:00'
+[2026-02-07T14:31:39.480+0000] {taskinstance.py:731} INFO - ::endgroup::
+[2026-02-07T14:31:39.483+0000] {logging_mixin.py:190} INFO - Reading raw_data/AAPL_2026-02-07.csv from MinIO...
+[2026-02-07T14:31:39.507+0000] {base.py:84} INFO - Retrieving connection 'minio_s3_conn'
+[2026-02-07T14:31:39.521+0000] {connection_wrapper.py:388} INFO - AWS Connection (conn_id='minio_s3_conn', conn_type='aws') credentials retrieved from login and password.
+[2026-02-07T14:31:40.655+0000] {logging_mixin.py:190} INFO - Model Training Complete. MSE: 418.64864428561157
+[2026-02-07T14:31:40.945+0000] {python.py:240} INFO - Done. Returned value was: None
+[2026-02-07T14:31:40.954+0000] {taskinstance.py:340} INFO - ::group::Post task execution logs
+[2026-02-07T14:31:40.954+0000] {taskinstance.py:352} INFO - Marking task as SUCCESS. dag_id=end_to_end_stock_prediction, task_id=train_xgboost_model, run_id=scheduled__2026-02-06T00:00:00+00:00, execution_date=20260206T000000, start_date=20260207T143139, end_date=20260207T143140
+[2026-02-07T14:31:41.013+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 0
+[2026-02-07T14:31:41.032+0000] {taskinstance.py:3900} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2026-02-07T14:31:41.034+0000] {local_task_job_runner.py:245} INFO - ::endgroup::
