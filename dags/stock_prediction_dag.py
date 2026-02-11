@@ -43,7 +43,7 @@ with DAG(
             replace=True
         )
         return filename
-        @task
+    @task
     def validate_data(file_key):
         s3 = S3Hook(aws_conn_id='minio_s3_conn')
         print(f"Validating data in {file_key}...")
@@ -170,4 +170,5 @@ with DAG(
 
     # DAG Flow
     raw_file = fetch_stock_data()
+    validated_file = validate_data(raw_file) 
     train_and_visualize(validated_file)
