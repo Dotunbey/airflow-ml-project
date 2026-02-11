@@ -24,7 +24,7 @@ with DAG(
     catchup=False,
     tags=['mlops', 'xgboost', 'viz']
 ) as dag:
-
+    
     @task
     def fetch_stock_data():
         print(f"Fetching data for {TICKER}...")
@@ -43,6 +43,44 @@ with DAG(
             replace=True
         )
         return filename
+        @task
+    def validate_data(file_key):
+        s3 = S3Hook(aws_conn_id='minio_s3_conn')
+        print(f"Validating data in {file_key}...")
+        
+        # Read the data
+        data = s3.read_key(key=file_key, bucket_name="stock-data")
+        df = pd.read_csv(io.StringIO(data))
+        
+        # Handle the Yahoo Finance header quirk inside validation too
+        if "Ticker" in df.columns or "Price" in df.iloc[0].values:
+             df = pd.read_csv(io.StringIO(data), header=2)
+        
+        # RULE 1: Check for Empty Data
+        if df.empty:
+            raise ValueError("CRITICAL: The downloaded dataset is empty!")
+            
+        # RULE 2: Check for Missing Values in Critical Columns
+        critical_cols = ['Close', 'Open', 'High', 'Low', 'Volume']
+        for col in critical_cols:
+            if col not in df.columns:
+                 raise ValueError(f"CRITICAL: Missing column {col}")
+            
+            # Count missing values
+            missing_count = df[col].isnull().sum()
+            if missing_count > 0:
+                print(f"WARNING: Found {missing_count} missing values in {col}. Dropping them...")
+                # We allow a few missing rows, but not too many
+                if missing_count > len(df) * 0.1: # If > 10% are missing, fail.
+                    raise ValueError(f"CRITICAL: Too many missing values in {col} (>10%)")
+        
+        # RULE 3: Statistical Sanity Check (Industrial Math)
+        # Price cannot be negative or zero
+        if (pd.to_numeric(df['Close'], errors='coerce') <= 0).any():
+             raise ValueError("CRITICAL: Found negative or zero prices! Data is corrupted.")
+             
+        print("✅ Data Quality Check Passed!")
+        return file_key
 
     @task
     def train_and_visualize(file_key):
@@ -131,5 +169,5 @@ with DAG(
             requests.post(DISCORD_WEBHOOK_URL, json=payload)
 
     # DAG Flow
-    data_file = fetch_stock_data()
-    train_and_visualize(data_file)
+    raw_file = fetch_stock_data()
+    train_and_visualize(validated_file)
