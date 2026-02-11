@@ -136,7 +136,7 @@ with DAG(
         )
         
         grid_search.fit(X_train, y_train)
-        best_model = grid_search.best_estimator_ # <--- HERE IS THE MISSING PIECE
+        best_model = grid_search.best_estimator_ # <--- This defines the Best Model
         print(f"✅ Best Params: {grid_search.best_params_}")
 
         # 4. EVALUATE
@@ -164,7 +164,7 @@ with DAG(
             replace=True
         )
 
-        # 6. SAVE MODEL ARTIFACT (For the API)
+        # 6. SAVE MODEL ARTIFACT (For the API - Phase 3)
         local_model_path = f"/tmp/{TICKER}_model.json"
         best_model.save_model(local_model_path)
         
@@ -200,7 +200,7 @@ with DAG(
             except Exception as e:
                 print(f"Discord Error: {e}")
 
-        # 8. EXPERIMENT TRACKING (The Lab Notebook)
+        # 8. EXPERIMENT TRACKING (The Lab Notebook - Phase 2)
         history_file_key = "experiments/model_history.csv"
         new_record = {
             "Date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
