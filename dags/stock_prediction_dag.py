@@ -167,6 +167,42 @@ with DAG(
                 "content": f"🚀 **Model Trained Successfully!**\n**Ticker:** {TICKER}\n**RMSE Error:** ${rmse:.2f}\n**MSE:** {mse:.2f}\n**Features:** {len(features)}\n*Graph saved to MinIO Data Lake.*"
             }
             requests.post(DISCORD_WEBHOOK_URL, json=payload)
+        # 6. SAVE TO CENTRAL EXPERIMENT LOG (The "Lab Notebook")
+        history_file_key = "experiments/model_history.csv"
+        
+        # Define the new row of data
+        new_record = {
+            "Date": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "Ticker": TICKER,
+            "Model": "XGBoost",
+            "RMSE": round(rmse, 2),
+            "MSE": round(mse, 2),
+            "Best_Params": str(grid_search.best_params_),
+            "Features": str(features)
+        }
+        new_df = pd.DataFrame([new_record])
+        
+        # Try to read the existing log
+        try:
+            print("Checking for existing experiment log...")
+            obj = s3.read_key(key=history_file_key, bucket_name="stock-data")
+            history_df = pd.read_csv(io.StringIO(obj))
+            # Append new data
+            history_df = pd.concat([history_df, new_df], ignore_index=True)
+        except Exception:
+            print("No existing log found. Creating a new one...")
+            history_df = new_df
+            
+        # Save back to MinIO
+        csv_buffer = io.StringIO()
+        history_df.to_csv(csv_buffer, index=False)
+        s3.load_string(
+            string_data=csv_buffer.getvalue(),
+            key=history_file_key,
+            bucket_name="stock-data",
+            replace=True
+        )
+        print("✅ Experiment Log Updated!")
 
     # DAG Flow
     raw_file = fetch_stock_data()
