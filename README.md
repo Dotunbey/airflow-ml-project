@@ -6,7 +6,7 @@
 ![Docker](https://img.shields.io/badge/Docker-Containerized-blue)
 ![XGBoost](https://img.shields.io/badge/ML-XGBoost-orange)
 
-An automated Machine Learning pipeline that forecasts stock market volatility using **Apache Airflow**, **MinIO (Data Lake)**, and **XGBoost**. The system fetches real-time financial data, calculates technical indicators (RSI, Bollinger Bands), trains a regression model, and delivers performance metrics via **Discord Webhooks**.
+This is an automated Machine Learning pipeline that forecasts stock market volatility using **Apache Airflow**, **MinIO (Data Lake)**, and **XGBoost**. The system fetches real-time financial data, calculates technical indicators (RSI, Bollinger Bands), trains a regression model, and delivers performance metrics via **Discord Webhooks**.
 
 ---
 
