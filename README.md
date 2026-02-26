@@ -34,7 +34,7 @@ graph LR
 * **SMA (Simple Moving Average):** Smooths out price noise (10-day & 50-day windows).
 
 
-* **Automated Alerting:** Sends real-time training results (RMSE, MSE) and visualization plots to a Discord channel.
+* **Automated Alerting:** Sending real-time training results (RMSE, MSE) and visualization plots to a Discord channel.
 
 ---
 
