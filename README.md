@@ -119,7 +119,7 @@ Go to the Airflow UI, unpause the `stock_prediction_plus_visuals` DAG, and click
 
 * Implement **Hyperparameter Tuning** using Optuna.
 * Deploy model as a REST API using **FastAPI**.
-* Add **Sentiment Analysis** from financial news to improve accuracy on volatile stocks like TSLA.
+* Add **Sentiment Analysis** from financial news to improve the accuracy on volatile stocks like TSLA.
 
 ---
 
