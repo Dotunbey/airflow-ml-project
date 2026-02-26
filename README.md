@@ -12,7 +12,7 @@ This is an automated Machine Learning pipeline that forecasts stock market volat
 
 ## 🏗️ Architecture
 
-The pipeline is fully containerized using Docker and follows a modern **Extract-Load-Transform-Train (ELTT)** architecture:
+This pipeline is fully containerized using Docker and follows a modern **Extract-Load-Transform-Train (ELTT)** architecture:
 
 ```mermaid
 graph LR
