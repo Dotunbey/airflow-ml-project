@@ -1,5 +1,5 @@
 
-# 📈 An End-to-End MLOps Stock Prediction Pipeline
+# 📈 End-to-End MLOps Stock Prediction Pipeline
 
 ![Python](https://img.shields.io/badge/Python-3.9%2B-blue)
 ![Airflow](https://img.shields.io/badge/Apache%20Airflow-2.9-red)
